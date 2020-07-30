@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Add an API</title>
+    </head>
+    <link rel="stylesheet" href="../css/index.css">
+    <body><div id='main'><center>
+        <h1>Add your API</h1>
+            <input type="text" placeholder="Enter request URL" id="url" name="url" size="50">
+            <p>Query Parameters</p>
+            <input type="text" placeholder="Key" id="key" name="url">
+            <input type="text" placeholder="Value" id="value" name="url"><br><br>
+            <button type="button" onclick="getAPIURL()" id="btn">Send</button><br>
+            <p>A sample response will appear here, for indepth monitoring <a href="monitorAPI.html">click here</a></p>
+            <textarea id="info" rows="10" cols="30" placeholder="Your API response will appear here">Your API response will appear here
+            </textarea>
+      </div>
+      <script src="../js/addAPI.js"></script>
+    </body>
+</html>
