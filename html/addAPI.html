@@ -7,13 +7,23 @@
         <h1>Add your API</h1>
             <input type="text" placeholder="Enter request URL" id="url" name="url" size="50">
             <p>Query Parameters</p>
-            <input type="text" placeholder="Key" id="key" name="url">
-            <input type="text" placeholder="Value" id="value" name="url"><br><br>
-            <button type="button" onclick="getAPIURL()" id="btn">Send</button><br>
-            <p>A sample response will appear here, for indepth monitoring <a href="monitorAPI.html">click here</a></p>
-            <textarea id="info" rows="10" cols="30" placeholder="Your API response will appear here">Your API response will appear here
-            </textarea>
-      </div>
+              <div id="keyvalue">
+                <input type="text" placeholder="Key" id="key" name="key">
+                <input type="text" placeholder="Value" id="value" name="url"><br>
+              </div>
+              <br><button type="button" onclick="addKeyValue()" id="btn1">Add more</button><br><br>
+
+              <input type="text" placeholder="Monitoring Time (hrs)" id="monitorTime">
+              <input type="text" placeholder="Interval (min)" id="interval"><br><br>
+              <button type="button" onclick="getAPIURL()" id="btn">Send</button><br>
+              
+          </div>
       <script src="../js/addAPI.js"></script>
+            <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+           https://firebase.google.com/docs/web/setup#available-libraries -->
+
     </body>
 </html>
