@@ -12,12 +12,12 @@ finishTime.setHours(monitorTime);
 console.log(new Date()<=finishTime);
 var count = 0;
 var ms = interval * 60000;
-while(new Date() >= finishTime) {
+//while(new Date() >= finishTime) {
   ajaxTime= new Date().getTime();
   console.log(new Date() >= finishTime);
   //var callAPI = setInterval(APIFetch(), ms);
   APIFetch();
-}
+//}
 function APIFetch() {
   $.ajax({
     url: url,
@@ -32,15 +32,15 @@ function APIFetch() {
     console.log(data);
   });
 
-  for(var i=0;i<interval*60000;i++)
-  {
-    console.log("time");
-  }
-  if(count>2)
-    clearInterval(callAPI)
-
-  count = count + 1;
-  console.log(count,"itereation");
+  // for(var i=0;i<interval*60000;i++)
+  // {
+  //   console.log("time");
+  // }
+  // if(count>2)
+  //   clearInterval(callAPI)
+  //
+  // count = count + 1;
+  // console.log(count,"itereation");
 }
 function hasProperty(obj){
   if (typeof obj === 'object' && typeof obj != null ) {
