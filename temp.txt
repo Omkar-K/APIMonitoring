@@ -1,0 +1,43 @@
+// var stringData = {};
+// var i = 0;
+// for (var key in data) {
+//   console.log(data[key]);
+// if (data.hasOwnProperty(key)) {
+//   console.log(typeof data);
+//
+//   if(typeof data[key] === 'object' && data !== null) {
+//     var obj = data[key];
+//
+//     for(var key1 in obj) {
+//
+//       if(typeof obj[key1] === 'object' && data !== null) {
+//         var obj1 = obj[key1];
+//         for(var key2 in obj1) {
+//           //console.log(obj1[key2]);
+//           stringData[i] = key2+" : "+obj1[key2];
+//           var para = document.createElement("P");               // Create a <p> element
+//           para.innerText = stringData[i];               // Insert text
+//           document.getElementById("monitor_data").appendChild(para);
+//           i++;
+//         }
+//       }
+//       else {
+//       stringData[i] = key+" : "+data[key];
+//       console.log(stringData);
+//       var para = document.createElement("P");               // Create a <p> element
+//       para.innerText = stringData[i];               // Insert text
+//       document.getElementById("monitor_data").appendChild(para);
+//       i++;
+//       }
+//     }
+//   }
+//   else {
+//   stringData[i] = key+" : "+data[key];
+//   console.log(stringData);
+//   var para = document.createElement("P");               // Create a <p> element
+//   para.innerText = stringData[i];               // Insert text
+//   document.getElementById("monitor_data").appendChild(para);
+//   i++;
+//   }
+// }
+//}
