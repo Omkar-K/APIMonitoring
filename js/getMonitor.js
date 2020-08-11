@@ -22,6 +22,17 @@ function APIFetch() {
   $.ajax({
     url: url,
     headers: {
+    },
+    error: function(xhr, status, error) {
+      var err = eval("(" + xhr.responseText + ")");
+      var err_code = eval("(" + xhr.status + ")");
+      $('#response').append(JSON.stringify("Status: "+ err.error ))
+      $('#response_code').append(JSON.stringify("Code: "+ err_code ))
+      console.log(err_code);
+    },
+    complete: function(xhr, textStatus) {
+      $('#response_code').append(JSON.stringify("Code: "+ xhr.status ))
+        console.log(xhr.status);
     }
   }).done(function(data, response) {
     deepFetch(data);
@@ -30,6 +41,9 @@ function APIFetch() {
     var totalTime = new Date().getTime()-ajaxTime;
     console.log(totalTime);
     console.log(data);
+
+    $('#response').append(JSON.stringify("Status: "+ response ))
+    $('#response_time').append(JSON.stringify("Time: "+ totalTime + "ms"))
   });
 
   // for(var i=0;i<interval*60000;i++)
