@@ -2,6 +2,18 @@ var ajaxTime= new Date().getTime();
 var url = sessionStorage.getItem("url");
 var monitorTime = sessionStorage.getItem("monitorTime");
 var interval = sessionStorage.getItem("interval");
+var firebaseConfig = {
+  apiKey: "AIzaSyBMpbWneTIHKksbO6sWHopoUfE62jsZMZA",
+  authDomain: "monitorapi-3d096.firebaseapp.com",
+  databaseURL: "https://monitorapi-3d096.firebaseio.com",
+  projectId: "monitorapi-3d096",
+  storageBucket: "monitorapi-3d096.appspot.com",
+  messagingSenderId: "786388724856",
+  appId: "1:786388724856:web:41393478dbeba7f4a0d18d"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+var database = firebase.database();
 
 console.log(url);
 $('#monitorTime').append(JSON.stringify("Your test will run for "+ monitorTime +" hour(s)"))

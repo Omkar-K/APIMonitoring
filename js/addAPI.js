@@ -1,6 +1,8 @@
-document.getElementById("btn").onclick = function() {getAPIURL()};
+
 var numberOfInputs = 1;
-// Your web app's Firebase configuration
+
+// var firebase = require("../firebase/app");
+// require("../firebase/database");
 var firebaseConfig = {
   apiKey: "AIzaSyBMpbWneTIHKksbO6sWHopoUfE62jsZMZA",
   authDomain: "monitorapi-3d096.firebaseapp.com",
@@ -12,15 +14,18 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+var database = firebase.database();
 
 function getAPIURL() {
       console.time("timer");
       // Selecting the input element and get its value
       const proxyurl = "https://cors-anywhere.herokuapp.com/";
       var url = document.getElementById("url").value;
+      var key = document.getElementById("key").value;
+      var value = document.getElementById("value").value;
+      console.log(key);
       if(key!='') {
-        var key = document.getElementById("key").value;
-        var value = document.getElementById("value").value;
+
         url = url + "?" + key + "=" +value;
         console.log(numberOfInputs);
         if(numberOfInputs > 0) {
@@ -42,7 +47,7 @@ function getAPIURL() {
       console.log(url);
       document.getElementById("value").innerHTML = "urlStr";
 
-      sendData(url,monitorTime,interval);
+      sendData();
 }
 function displayAPIInfo(data) {
       var urlStr = JSON.stringify(data);
@@ -51,12 +56,18 @@ function displayAPIInfo(data) {
       document.getElementById("info").innerHTML = urlStr;
       console.timeEnd("timer");
 }
-function sendData(url, monitorTime, interval) {
+function sendData() {
 
-      sessionStorage.setItem("url", url);
-      sessionStorage.setItem("monitorTime", monitorTime);
-      sessionStorage.setItem("interval", interval);
-      window.location.href = 'monitorAPI.html' + '#'+ url;
+
+      // database.ref('api').push({
+      //   url: url,
+      //   monitorTime: monitorTime,
+      //   interval: interval
+      // });
+      // sessionStorage.setItem("url", url);
+      // sessionStorage.setItem("monitorTime", monitorTime);
+      // sessionStorage.setItem("interval", interval);
+      window.location.href = 'listAPI.html';
 
 }
 function addKeyValue() {

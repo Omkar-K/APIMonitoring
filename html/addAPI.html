@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head><title>Add an API</title>
+      <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-database.js"></script>
     </head>
     <link rel="stylesheet" href="../css/index.css">
     <body><div id='main'><center>
@@ -16,14 +18,9 @@
               <input type="text" placeholder="Monitoring Time (hrs)" id="monitorTime">
               <input type="text" placeholder="Interval (min)" id="interval"><br><br>
               <button type="button" onclick="getAPIURL()" id="btn">Send</button><br>
-              
+
           </div>
       <script src="../js/addAPI.js"></script>
-            <!-- The core Firebase JS SDK is always required and must be listed first -->
-      <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
-
-      <!-- TODO: Add SDKs for Firebase products that you want to use
-           https://firebase.google.com/docs/web/setup#available-libraries -->
-
+      <script src="../bundle.js"></script>
     </body>
 </html>

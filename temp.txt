@@ -41,3 +41,23 @@
 //   }
 // }
 //}
+
+<script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-database.js"></script>
+<script>
+
+// console.log("123");
+// firebase.database().ref("User").set({
+//   url: "123",
+//   monitorTime: "2"
+// });
+function fireData() {
+  console.log("in fireData");
+  firebase.database().ref("User").set({
+    url: document.getElementById("url").value,
+    monitorTime: document.getElementById("monitorTime").value
+  });
+}
+</script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
