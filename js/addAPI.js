@@ -41,32 +41,29 @@ function getAPIURL() {
       if(monitorTime!='' && interval!='') {
         var monitorTime = document.getElementById("monitorTime").value;
         var interval = document.getElementById("interval").value;
-        console.log(monitorTime);
+        var users = document.getElementById("users").value;
       }
 
-      console.log(url);
-      document.getElementById("value").innerHTML = "urlStr";
-
-      sendData();
+      if(document.getElementById('publicAPI').checked) {
+        var publicAPI = document.getElementById("publicAPI").value;
+        sendData(url,monitorTime,interval,users, publicAPI);
+      }
+      else if(document.getElementById('privateAPI').checked) {
+        var privateAPI = document.getElementById("privateAPI").value;
+        sendData(url,monitorTime,interval,users, privateAPI);
+      }
 }
-function displayAPIInfo(data) {
-      var urlStr = JSON.stringify(data);
-      console.log("In display");
-      console.log(data.status || data.response_code);
-      document.getElementById("info").innerHTML = urlStr;
-      console.timeEnd("timer");
-}
-function sendData() {
 
+function sendData(url,monitorTime,interval,users,apiType) {
 
-      // database.ref('api').push({
-      //   url: url,
-      //   monitorTime: monitorTime,
-      //   interval: interval
-      // });
-      // sessionStorage.setItem("url", url);
-      // sessionStorage.setItem("monitorTime", monitorTime);
-      // sessionStorage.setItem("interval", interval);
+      database.ref('api').push({
+        url: url,
+        monitorTime: monitorTime,
+        interval: interval,
+        numberOfUsers: users,
+        APIType: apiType
+      });
+
       window.location.href = 'listAPI.html';
 
 }
