@@ -27,7 +27,11 @@ function getAPI() {
       btn.innerHTML = "Take a look";
       btn.id = childKey;
       btn.onclick = function() {
-        gotoAPI(childData.url, childData.monitorTime, childData.interval)
+        gotoAPI(childData.url,
+          childData.monitorTime,
+          childData.interval,
+          childData.numberOfUsers,
+          childData.APIType)
       }
       container.appendChild(list);
       container.appendChild(btn);
@@ -36,10 +40,15 @@ function getAPI() {
       });
     });
   }
-function gotoAPI(url, monitorTime, interval) {
-  console.log(url);
+function gotoAPI(url, monitorTime, interval, users, apiType) {
+
   sessionStorage.setItem("url", url);
   sessionStorage.setItem("monitorTime", monitorTime);
   sessionStorage.setItem("interval", interval);
-  window.location.href = 'monitorAPI.html';
+  sessionStorage.setItem("users", users);
+
+  if(apiType=="publicAPI")
+    window.location.href = 'publicMonitorAPI.html';
+  else
+    window.location.href = 'privateMonitorAPI.html';
 }
