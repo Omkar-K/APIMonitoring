@@ -11,15 +11,23 @@
   <body><center>
     <fieldset>
     <legend>Public API Monitor</legend>
-    <h1> Your API Data</h1>
-    <h1> Response </h1>
-    <h4 id="response_code"></h4>
-    <h4 id="response"></h4>
-    <h3 id="response_time"></h3>
-    <h3 id='monitorTime'></h3>
+    <h3> Your API Data</h1>
+    <h3> Response </h1>
+    <h2 id="response_code"></h2>
+    <h2 id="response"></h2>
+    <h2 id="response_time"></h2>
+    <h2 id="avg_response">Average Response Time</h2>
+    <h4 id='monitorTime'></h4>
     <button type="button" id="download">Download Data</button><br><br>
-    <button type="button" id="response_text">Show response text</button><br><br>
-    <button type="button" id="chartbtn">Make a graph</button><br>
+    <button type="button" id="response_text">Show response text</button><br>
+    <a id="downloadGraph"
+        download="APIGraph.jpg"
+        href=""
+        class="btn btn-primary float-right bg-flat-color-1"
+        title="Download Graph">Download Graph
+   </a><br>
+    <button type="button" id="chartbtn">Force re-render graph</button><br>
+    <h4>Your test will run for more </h4>
     <h3 id='time'></h3>
   </center>
     <fieldset>
