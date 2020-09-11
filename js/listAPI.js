@@ -21,10 +21,13 @@ function getAPI() {
       var childData = childSnapshot.val();
 
       console.log(childData.url);
+      var innerContainer = document.createElement("div");
       var list = document.createElement("P");
+      var type = document.createElement("P");
       var btn = document.createElement("BUTTON");
       list.innerText = childData.url;
-      btn.innerHTML = "Take a look";
+      type.innerText = childData.APIType;
+      btn.innerHTML = "Monitor API";
       btn.id = childKey;
       btn.onclick = function() {
         gotoAPI(childData.url,
@@ -33,9 +36,11 @@ function getAPI() {
           childData.numberOfUsers,
           childData.APIType)
       }
-      container.appendChild(list);
-      container.appendChild(btn);
-      container.appendChild(document.createElement("br"));
+      innerContainer.appendChild(list);
+      innerContainer.appendChild(type);
+      innerContainer.appendChild(btn);
+      container.appendChild(innerContainer);
+      container.appendChild(document.createElement("hr"));
 
       });
     });

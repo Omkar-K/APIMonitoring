@@ -47,6 +47,7 @@ var FileSaver = require('file-saver');
 document.getElementById ("download").addEventListener ("click", function(){downloadData()}, false);
 document.getElementById ("chartbtn").addEventListener ("click", function(){chartIt()}, false);
 //document.getElementById ("response_text").addEventListener ("click", function(){showData()}, false);
+
 //Download Chart Image
 document.getElementById("downloadGraph").addEventListener('click', function(){
   /*Get image of canvas element*/
@@ -119,6 +120,7 @@ var x = setInterval(function() {
 }, 1000);
 
 async function APIFetch(url) {
+  // jQuery AJAX function for API
   var ajaxTime= new Date().getTime();
   $.ajax({
     url: url,
@@ -134,7 +136,7 @@ async function APIFetch(url) {
         $('#response_code1').html(JSON.stringify(""+ numOfErrorsAPI1 ));
         var res = err_code + "," + xhr.statusText + "," + totalTime;
         averageTime1 += totalTime;
-        $('#avg_response1').html(JSON.stringify(""+ averageTime1/(numOfErrorsAPI1+sucessAPI1)));
+        $('#avg_response1').html(JSON.stringify(""+ ((averageTime1/(numOfErrorsAPI1+sucessAPI1))/1000).toFixed(3)));
         allData1.push(res);
 
         // if(document.getElementById("tableItem")!=null)
@@ -145,7 +147,7 @@ async function APIFetch(url) {
         $('#response_code2').html(JSON.stringify(""+ numOfErrorsAPI2 ));
         var res = err_code + "," + xhr.statusText + "," + totalTime;
         averageTime2 += totalTime;
-        $('#avg_response2').html(JSON.stringify(""+ (averageTime2/(numOfErrorsAPI2+sucessAPI2))/1000));
+        $('#avg_response2').html(JSON.stringify(""+ ((averageTime2/(numOfErrorsAPI2+sucessAPI2))/1000).toFixed(3)));
         allData2.push(res);
 
         // if(document.getElementById("tableItem")!=null)
@@ -188,6 +190,8 @@ async function APIFetch(url) {
     rawData = data;
   });
 }
+
+// Fynctions for parsing response data
 function hasProperty(obj){
   if (typeof obj === 'object' && typeof obj != null ) {
 
@@ -226,6 +230,8 @@ async function deepFetch(data){
     document.getElementById("monitor_data").appendChild(para);
   }
 };
+
+// Function to download gathered test data
 function downloadData() {
   let csvContent = "data:text/csv;charset=utf-8,"
   csvContent += "API" + url1 + "\r\n";
@@ -247,6 +253,8 @@ function downloadData() {
   link.setAttribute("download", "APIData.csv");
   link.click();
 }
+
+// Function to draw a graph
 function chartIt() {
   var count = 0;
   const xlabels = [];
@@ -351,63 +359,11 @@ function chartIt() {
     }
 });
 }
+// To display the response data to the user
 function showData() {
   console.log(rawData);
   deepFetch(rawData)
   document.getElementById("dataField").style.display = "flex";
-}
-function showList(code,time) {
-
-  var tableItem = document.getElementById("tableItem");
-  var rowItem = document.createElement('tr');
-  var rowItem1 = document.createElement('tr');
-  var symbol = document.createElement('td');
-  var codeCell = document.createElement('td');
-  var statusCell = document.createElement('td');
-  var timeCell = document.createElement('td');
-
-  if(flagFirst==1){
-    var rowItem1 = document.createElement('tr');
-    var symbolHead = document.createElement('th');
-    var codeCellHead = document.createElement('th');
-    var statusCellHead = document.createElement('th');
-    var timeCellHead = document.createElement('th');
-
-    symbolHead.appendChild(document.createTextNode(" "));
-    rowItem1.appendChild(symbolHead);
-
-    codeCellHead.appendChild(document.createTextNode("Status Code"));
-    rowItem1.appendChild(codeCellHead);
-
-    statusCellHead.appendChild(document.createTextNode("Description"));
-    rowItem1.appendChild(statusCellHead);
-
-    timeCellHead.appendChild(document.createTextNode("Response Time"));
-    rowItem1.appendChild(timeCellHead);
-
-    tableItem.appendChild(rowItem1);
-
-    flagFirst = 0;
-  }
-
-  if(code!=200)
-      symbol.appendChild(document.createTextNode("❌"));
-  else if(time/1000>1.0)
-      symbol.appendChild(document.createTextNode("⏰"));
-  else if(code==200)
-      symbol.appendChild(document.createTextNode("✅"));
-  rowItem.appendChild(symbol);
-
-  codeCell.appendChild(document.createTextNode(" "+ code));
-  rowItem.appendChild(codeCell);
-
-  statusCell.appendChild(document.createTextNode(status_code[code]));
-  rowItem.appendChild(statusCell);
-
-  timeCell.appendChild(document.createTextNode(" "+(time/1000)+" sec"));
-  rowItem.appendChild(timeCell);
-
-  tableItem.appendChild(rowItem);
 }
 
 },{"file-saver":2}],2:[function(require,module,exports){

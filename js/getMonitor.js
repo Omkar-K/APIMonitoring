@@ -39,14 +39,29 @@ document.getElementById ("download").addEventListener ("click", function(){downl
 document.getElementById ("chartbtn").addEventListener ("click", function(){chartIt()}, false);
 document.getElementById ("response_text").addEventListener ("click", function(){showData()}, false);
 //console.log(url);
+
+// Downloading graph
+
+if(document.getElementById("downloadGraph"))
+  document.getElementById("downloadGraph").addEventListener('click', function(){
+  /*Get image of canvas element*/
+  var url_base64jp = document.getElementById("chart").toDataURL("image/jpg");
+  /*get download button (tag: <a></a>) */
+  var a =  document.getElementById("downloadGraph");
+  /*insert chart image url to download button (tag: <a></a>) */
+  a.href = url_base64jp;
+});
+
 $('#monitorTime').append(JSON.stringify("Your test will run for "+ monitorTime +" hour(s)"))
 var allData = []
 var numOfErrors = 0;
 var sucess = 0;
+var averageTime = 0.0;
+
+//Performing the first fetch before the timer starts 
 for(i=0;i<users;i++)
   APIFetch();
 
-//chartIt();
 
 var countDownDate = new Date().getTime() + (monitorTime*60*60*1000);
 var timeToFetch = new Date().getTime() + (interval*60*1000);
@@ -76,6 +91,9 @@ var x = setInterval(function() {
       APIFetch();
     timeToFetch = now + (interval*60*1000);
   }
+  if(new Date((timeToFetch-(interval*60*1000)) + 6*1000).toString()== new Date(now).toString()){
+      chartIt();
+  }
   // if(new Date(timeToFetch+(2*1000)).toString() == new Date(now).toString()) {
   //   chartIt();
   // }
@@ -88,6 +106,24 @@ var x = setInterval(function() {
 
 async function APIFetch() {
   var ajaxTime= new Date().getTime();
+
+// Fetch function for API
+
+  // await fetch(url)
+  // .then(response => console.log(response))
+  // .then(data => {
+  //   var totalTime = new Date().getTime()-ajaxTime;
+  //   averageTime += totalTime;
+  //   sucess = sucess + 1;
+  //   $('#avg_response').html(JSON.stringify("Average Response Time(s): "+ ((averageTime/(sucess))/1000).toFixed(3)));
+  //   $('#response').html(JSON.stringify("Number of succesuful test: "+ sucess ));
+  //   console.log(data);
+  //   var res = "200" + "," + "textStatus" + "," + totalTime;
+  //   allData.push(res);
+  // });
+
+
+// jQuery AJAX function for API
   $.ajax({
     url: url,
     headers: {
@@ -99,7 +135,9 @@ async function APIFetch() {
       //$('#response_code').append(JSON.stringify("Code: "+ err_code ))
       var totalTime = new Date().getTime()-ajaxTime;
       numOfErrors = numOfErrors + 1;
+      averageTime += totalTime;
 
+      $('#avg_response').html(JSON.stringify("Average Response Time(s): "+ ((averageTime/(numOfErrors+sucess))/1000).toFixed(3)));
       $('#response_code').html(JSON.stringify("Number of errors: "+ numOfErrors ));
       var res = err_code + "," + xhr.statusText + "," + totalTime;
       allData.push(res);
@@ -111,8 +149,11 @@ async function APIFetch() {
       //$('#response_code').html(JSON.stringify("Code: "+ xhr.status ))
         //console.log(xhr);
         if(xhr.status == 200) {
+          var totalTime = new Date().getTime()-ajaxTime;
           sucess = sucess + 1;
+          averageTime += totalTime;
 
+          $('#avg_response').html(JSON.stringify("Average Response Time(s): "+ ((averageTime/(numOfErrors+sucess))/1000).toFixed(3)));
           $('#response').html(JSON.stringify("Number of succesuful test: "+ sucess ));
           var totalTime = new Date().getTime()-ajaxTime;
           var res = xhr.status + "," + textStatus + "," + totalTime;
@@ -126,6 +167,9 @@ async function APIFetch() {
     rawData = data;
   });
 }
+
+
+// Fynctions for parsing response data
 function hasProperty(obj){
   if (typeof obj === 'object' && typeof obj != null ) {
 
@@ -144,9 +188,8 @@ async function deepFetch(data){
     for (var key in data) {
       if (data.hasOwnProperty(key)) {
         if(hasProperty(data[key])){
-          //console.log("in data");
+          //recursive call
           deepFetch(data[key]);
-          //console.log("exit");
         }
         else{
           stringData[i] = key+" : "+data[key];
@@ -164,6 +207,8 @@ async function deepFetch(data){
     document.getElementById("monitor_data").appendChild(para);
   }
 };
+
+// Function to download gathered test data
 function downloadData() {
   let csvContent = "data:text/csv;charset=utf-8,"
   csvContent += "Code,Status,time" + "\r\n";
@@ -178,6 +223,8 @@ function downloadData() {
   link.setAttribute("download", "APIData.csv");
   link.click();
 }
+
+// Function to draw a graph
 function chartIt() {
   const xlabels = [];
   const resTime = [];
@@ -193,7 +240,7 @@ function chartIt() {
       colors1.push('rgb(246, 8, 8, 1)')
     }
   });
-  console.log(xlabels, resTime);
+  //console.log(xlabels, resTime);
 
   var ctx = document.getElementById("chart").getContext('2d');
   var myChart = new Chart(ctx, {
@@ -218,6 +265,10 @@ function chartIt() {
            display: true,
            text: 'Response time vs Response code'
           },
+          tooltips: {
+            mode: 'nearest',
+            intersect: true,
+          },
         scales: {
             yAxes: [{
                 ticks: {
@@ -232,11 +283,15 @@ function chartIt() {
     }
 });
 }
+
+// To display the response data to the user
 function showData() {
   console.log(rawData);
   deepFetch(rawData)
   document.getElementById("dataField").style.display = "flex";
 }
+
+// Function for building error table
 function showList(code,time) {
 
   var tableItem = document.getElementById("tableItem");
