@@ -1,4 +1,4 @@
-# APIMonitoring
+# API Evaluation and Monitoring
 
 A web application to monitor APIs in a periodic and extensive manner.
 
